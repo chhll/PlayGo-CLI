@@ -5,12 +5,12 @@
 using namespace std;
 
 const unsigned total_move = 400;
-const char* row_9 = "\tA   B   C   D   E   F   G   H   J";
-const char* col_9 = "\t|   |   |   |   |   |   |   |   |";
-const char* row_13 = "\tA   B   C   D   E   F   G   H   J   K   L   M   N";
-const char* col_13 = "\t|   |   |   |   |   |   |   |   |   |   |   |   |";
-const char* row_19 = "\tA   B   C   D   E   F   G   H   J   K   L   M   N   O   P   Q   R   S   T";
-const char* col_19 = "\t|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |";
+const string row_9 = "A   B   C   D   E   F   G   H   J";
+const string col_9 = "|   |   |   |   |   |   |   |   |";
+const string row_13 = "A   B   C   D   E   F   G   H   J   K   L   M   N";
+const string col_13 = "|   |   |   |   |   |   |   |   |   |   |   |   |";
+const string row_19 = "A   B   C   D   E   F   G   H   J   K   L   M   N   O   P   Q   R   S   T";
+const string col_19 = "|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |";
 
 // determine the board legit.
 int funcSizeOfBoard (unsigned lines) {
@@ -23,7 +23,8 @@ int funcSizeOfBoard (unsigned lines) {
 };
 
 // determine whether the next move legit.
-int funcMove(unsigned x, unsigned y) {
+int funcMove(string m) {
+    if (2!=m.length() && 3!=m.length()) return error;
     return 0;
 };
 
@@ -110,36 +111,50 @@ int funcInitBoard (struc_Board *b, unsigned s) {
 
 // print the Go board after every move.
 int funcPrintBoard (struc_Board *b) {
-    unsigned x, y;
-    string row, rowToPrint;
+    int x, y; unsigned size;
+    string *rowToPrint, row, col;
 
     if (NULL == b) {
         cout << "funcPrintBoard: Board array error." << endl;
         return error;
     };
 
-    if (9 != b->size && 13 != b->size && 19 != b->size) {
+    size = b->size;
+    if (9!=size && 13!=size && 19!=size) {
         cout << "funcPrintBoard: Board size error." << endl;
         return error;
     };
 
-    for (y=b->size; y>0; y--) {
-        row = ""; rowToPrint = "";
-        for (x=1; x<b->size+1; x++) {
-            row += b->board[x-1][y-1].shape;
-            if (x == b->size) NULL==b->board[x-1][y-1].Zi ? row+=(b->board[x-1][y-1].shape) : row+=(b->board[x-1][y-1].Zi->colour);
-            else {
-                NULL == b->board[x-1][y-1].Zi ? 
-                NULL == b->board[x][y-1].Zi ? row+=(b->board[x-1][y-1].shape+"---") : row+=(b->board[x-1][y-1].Zi->colour+"-- ")
-                : NULL == b->board[x][y-1].Zi ? row+=(b->board[x-1][y-1].Zi->colour+" --") : row+=(b->board[x-1][y-1].Zi->colour+" - ");
-            };
-        };
+    if (9 == size) {
+        row = row_9;
+        col = col_9;
+    }
 
-        1 == y ? rowToPrint = "\t" + y + row + "\t" + "\n" 
-        : rowToPrint = "\t" + y + row + "\t" + "\n" + col_19;
-        // rowToPrint = "\t" + y + row + "\t" + "\n";
-        cout << rowToPrint;
+    else if (13 == size) {
+        row = row_13;
+        col = col_13;
+    }
+
+    else if (19 == size) {
+        row = row_19;
+        col = col_19;
     };
 
+    rowToPrint = new string[size];
+    for (y = 0; y < size; y++) {
+        for (x = 0; x < size; x++) {
+            rowToPrint[y] += b->board[x][y].shape;
+            x==size-1 ? rowToPrint[y]+="" : rowToPrint[y] += "---";
+        };
+    };
+
+    cout << '\t' << '\t' << row << '\n';
+    for (y = size; y > 0; y--) {
+        cout << '\t' << y << '\t' << rowToPrint[y-1] << '\t' << y << '\n';
+        y == 1 ? cout << "" : cout << '\t' << '\t' << col << '\n';
+    };
+    cout << '\t' << '\t' << row << '\n';
+
+    delete []rowToPrint;
     return 0;
 };

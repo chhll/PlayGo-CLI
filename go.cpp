@@ -18,11 +18,13 @@ int main () {
     if (error == funcInitBoard(b, sizeOfBoard)) return error;
     if (error == funcPrintBoard(b)) return error;
 
-    /*
     while (!endOfGame) {
+        cout << "Please input the next move (like c10): ";
         cin >> nextMove;
+        if (error == funcMove(nextMove)) cout << "The move is invalid." << endl;
     };
-    */
+    
 
+    delete b;
     return 0;
 }
