@@ -1,3 +1,7 @@
+#include <string>
+
+using namespace std;
+
 enum pawn_Color {Grey = 2, Black = 1, White = 0};
 enum pawn_Status {Dead = 1, Alive = 0};
 enum position_Status {Forbidden = 2, Occupied = 1, Unoccupied = 0};
@@ -8,19 +12,21 @@ enum position_Status {Forbidden = 2, Occupied = 1, Unoccupied = 0};
 #define line_13 13
 #define line_19 19
 
-
-struct struc_Coordinates {
+class struc_Coordinates {
+public:
     unsigned x;
     unsigned y;
 };
 
-struct struc_Pawn {
+class struc_Pawn {
+public:
     struc_Coordinates coord;
     pawn_Color colour;
-    pawn_Status state;
+    pawn_Status status;
 };
 
-struct struc_Position {
+class struc_Position {
+public:
     unsigned blkRobbed;
     unsigned whtRobbed;
     char shape;
@@ -29,21 +35,23 @@ struct struc_Position {
     struc_Pawn *Zi;
 };
 
-struct struc_Step {
+class struc_Step {
+public:
     struc_Coordinates coord;
     struc_Pawn* Zi;
     unsigned Move;
 };
 
-struct struc_Board {
+class struc_Board {
+public:
     unsigned size;
     struc_Position board[line_19][line_19];
 };
 
 int funcSizeOfBoard(unsigned);
 unsigned funcCharacterToX(char);
-int funcPlayable(struc_Board *, unsigned);
+int funcPlayable(struc_Board *, unsigned, unsigned);
 int funcInitBoard(struc_Board *, unsigned);
 struc_Step* funceInitSteps();
-struc_Coordinates funcMove();
+int funcMove(string);
 int funcPrintBoard(struc_Board *);
