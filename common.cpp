@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cctype>
 #include "common.h"
 
 using namespace std;
@@ -23,8 +24,34 @@ int funcSizeOfBoard (unsigned lines) {
 };
 
 // determine whether the next move legit.
-int funcMove(string m) {
-    if (2!=m.length() && 3!=m.length()) return error;
+int funcMoveX(struc_Board *b, string m) {
+    int x; string x_coord;
+    
+    if (NULL == b) {
+        cout << "funcMoveX: Board does not exist." << endl;
+        return error;
+    };
+    
+    if (2 != m.length() && 3 != m.length()) {
+        cout << "funcMoveX: Length error." << endl;
+        return error;
+    };
+
+    if (isupper(m[0])) {
+        if (m[0]<'A' || m[0]-'A'>b->size || 'I'==m[0]) {
+            cout << "funcMoveX: X coordinate error." << endl;
+            return error;
+        };
+    }
+
+    else {
+        if (m[0]<'a' || m[0]-'a'>b->size || 'i'==m[0]) {
+            cout << "funcMoveX: x coordinate error." << endl;
+            return error;
+        };
+    };
+
+    
     return 0;
 };
 
@@ -44,7 +71,7 @@ unsigned funcCharacterToX (char x) {
 // determine the X, Y point is playable or not.
 int funcPlayable (struc_Board *b, unsigned x, unsigned y) {
     if (NULL == b) {
-        cout << "funcPlayable: Board is empty." << endl;
+        cout << "funcPlayable: Board does not exist." << endl;
         return error;
     }
 
@@ -86,7 +113,7 @@ int funcInitBoard (struc_Board *b, unsigned s) {
     unsigned x, y;
 
     if (NULL == b) {
-        cout << "funcInitBoard: Board array error." << endl;
+        cout << "funcInitBoard: Board does not exist." << endl;
         return error;
     };
 
@@ -115,7 +142,7 @@ int funcPrintBoard (struc_Board *b) {
     string *rowToPrint, row, col;
 
     if (NULL == b) {
-        cout << "funcPrintBoard: Board array error." << endl;
+        cout << "funcPrintBoard: Board does not exist." << endl;
         return error;
     };
 

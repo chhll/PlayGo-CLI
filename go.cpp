@@ -19,11 +19,10 @@ int main () {
     if (error == funcPrintBoard(b)) return error;
 
     while (!endOfGame) {
-        cout << "Please input the next move (like c10): ";
+        cout << "Please enter the next move (like D4): ";
         cin >> nextMove;
-        if (error == funcMove(nextMove)) cout << "The move is invalid." << endl;
+        if (error == funcMove(b, nextMove)) cout << "Move invalid. ";
     };
-    
 
     delete b;
     return 0;

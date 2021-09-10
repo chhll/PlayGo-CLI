@@ -53,5 +53,6 @@ unsigned funcCharacterToX(char);
 int funcPlayable(struc_Board *, unsigned, unsigned);
 int funcInitBoard(struc_Board *, unsigned);
 struc_Step* funceInitSteps();
-int funcMove(string);
+int funcMoveX(struc_Board *, string);
+int funcMoveY(struc_Board*, string);
 int funcPrintBoard(struc_Board *);
