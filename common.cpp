@@ -25,7 +25,7 @@ int funcSizeOfBoard (unsigned lines) {
 
 // determine whether the next move legit.
 int funcMoveX(struc_Board *b, string m) {
-    int x; string x_coord;
+    int x; string x_coord; int size;
     
     if (NULL == b) {
         cout << "funcMoveX: Board does not exist." << endl;
@@ -37,18 +37,23 @@ int funcMoveX(struc_Board *b, string m) {
         return error;
     };
 
+    size = b->size;
     if (isupper(m[0])) {
-        if (m[0]<'A' || m[0]-'A'>b->size || 'I'==m[0]) {
+        if (m[0]<'A' || m[0]-'A'>size || 'I'==m[0]) {
             cout << "funcMoveX: X coordinate error." << endl;
             return error;
         };
+
+        x = m[0] - 'A';
     }
 
     else {
-        if (m[0]<'a' || m[0]-'a'>b->size || 'i'==m[0]) {
+        if (m[0]<'a' || m[0]-'a'>size || 'i'==m[0]) {
             cout << "funcMoveX: x coordinate error." << endl;
             return error;
         };
+
+        x = m[0] - 'a';
     };
 
     
@@ -138,7 +143,7 @@ int funcInitBoard (struc_Board *b, unsigned s) {
 
 // print the Go board after every move.
 int funcPrintBoard (struc_Board *b) {
-    int x, y; unsigned size;
+    int x, y, size;
     string *rowToPrint, row, col;
 
     if (NULL == b) {

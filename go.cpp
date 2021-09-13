@@ -21,7 +21,7 @@ int main () {
     while (!endOfGame) {
         cout << "Please enter the next move (like D4): ";
         cin >> nextMove;
-        if (error == funcMove(b, nextMove)) cout << "Move invalid. ";
+        if (error == funcMoveX(b, nextMove)) cout << "Move invalid. ";
     };
 
     delete b;
