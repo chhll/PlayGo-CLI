@@ -23,7 +23,7 @@ int funcSizeOfBoard (unsigned lines) {
     return 0;
 };
 
-// determine whether the next move legit.
+// determine the next X move.
 int funcMoveX(struc_Board *b, string m) {
     int x; string x_coord; int size;
     
@@ -44,7 +44,7 @@ int funcMoveX(struc_Board *b, string m) {
             return error;
         };
 
-        x = m[0] - 'A';
+        m[0] < 'I' ? x = m[0] - 'A' : x = m[0] - 'A' + 1;
     }
 
     else {
@@ -53,11 +53,35 @@ int funcMoveX(struc_Board *b, string m) {
             return error;
         };
 
-        x = m[0] - 'a';
+        m[0] < 'i' ? x = m[0] - 'a' : x = m[0] - 'a' + 1;
+    };
+    
+    return x;
+};
+
+// determine the next Y move.
+int funcMoveY(struc_Board* b, string m) {
+    int y = 0; string y_coord; int size;
+
+    if (NULL == b) {
+        cout << "funcMoveY: Board does not exist." << endl;
+        return error;
     };
 
-    
-    return 0;
+    if (2 != m.length() && 3 != m.length()) {
+        cout << "funcMoveY: Length error." << endl;
+        return error;
+    };
+
+    y_coord = m.substr(1);
+    y = stoi(y_coord);
+    size = b->size;
+    if (y<1 || y>size) {
+        cout << "funcMoveY: Y coordinate error." << endl;
+        return error;
+    };
+
+    return y;
 };
 
 // verify the coordinates are valid.
