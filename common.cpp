@@ -81,24 +81,33 @@ int funcMoveY(struc_Board* b, string m) {
         return error;
     };
 
-    return y;
+    return y - 1;
 };
 
-// verify the coordinates are valid.
-unsigned funcCharacterToX (char x) {
-    if (x=='i' || x<'a' || x>'t') {
-        cout << x + " is not a valid x coordinate.\n";
-        return 1;
+// fall the pawn on the board.
+struc_Pawn *funcFall(struc_Board *b, char shape, int x, int y) {
+    struc_Pawn* pawn = NULL;
+
+    if (NULL == b) {
+        cout << "funcFall: Board does not exist." << endl;
+        return NULL;
     };
 
-    if (x < 'i') return x - 'a' + 1;
-    if (x > 'i') return x - 'a' + 2;
+    if (error == funcPlayable(b, x, y)) {
+        cout << "funcFall: coordinate error." << endl;
+        return NULL;
+    };
 
-    return 1;
+    pawn = new struc_Pawn;
+    pawn->shape = shape;
+    pawn->coord.x = x;
+    pawn->coord.y = y;
+    pawn->status = Alive;
+    return pawn;
 };
 
 // determine the X, Y point is playable or not.
-int funcPlayable (struc_Board *b, unsigned x, unsigned y) {
+int funcPlayable (struc_Board *b, int x, int y) {
     if (NULL == b) {
         cout << "funcPlayable: Board does not exist." << endl;
         return error;
@@ -115,7 +124,7 @@ int funcPlayable (struc_Board *b, unsigned x, unsigned y) {
     };
 
     if (NULL != b->board[x-1][y-1].Zi) {
-        cout << "funcPlayable: coordinate been fallen." << endl;
+        cout << "funcPlayable: position been fallen." << endl;
         return error;
     };
 
@@ -199,7 +208,8 @@ int funcPrintBoard (struc_Board *b) {
     rowToPrint = new string[size];
     for (y = 0; y < size; y++) {
         for (x = 0; x < size; x++) {
-            rowToPrint[y] += b->board[x][y].shape;
+            if (NULL == b->board[x][y].Zi) rowToPrint[y] += b->board[x][y].shape;
+            else rowToPrint[y] += b->board[x][y].Zi->shape;
             x==size-1 ? rowToPrint[y]+="" : rowToPrint[y] += "---";
         };
     };

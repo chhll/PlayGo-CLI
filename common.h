@@ -14,15 +14,15 @@ enum position_Status {Forbidden = 2, Occupied = 1, Unoccupied = 0};
 
 class struc_Coordinates {
 public:
-    unsigned x;
-    unsigned y;
+    int x;
+    int y;
 };
 
 class struc_Pawn {
 public:
     struc_Coordinates coord;
-    pawn_Color colour;
     pawn_Status status;
+    char shape;
 };
 
 class struc_Position {
@@ -49,10 +49,10 @@ public:
 };
 
 int funcSizeOfBoard(unsigned);
-unsigned funcCharacterToX(char);
-int funcPlayable(struc_Board *, unsigned, unsigned);
+int funcPlayable(struc_Board *, int, int);
 int funcInitBoard(struc_Board *, unsigned);
+int funcPrintBoard(struc_Board *);
 struc_Step* funceInitSteps();
 int funcMoveX(struc_Board *, string);
-int funcMoveY(struc_Board*, string);
-int funcPrintBoard(struc_Board *);
+int funcMoveY(struc_Board *, string);
+struc_Pawn *funcFall(struc_Board *, char, int, int);
