@@ -95,6 +95,7 @@ struc_Pawn *funcFall(struc_Board *b, char shape, int x, int y) {
 
     if (error == funcPlayable(b, x, y)) {
         cout << "funcFall: coordinate error." << endl;
+        cout << "x == " << x << " y == " << y << endl;
         return NULL;
     };
 
@@ -108,22 +109,24 @@ struc_Pawn *funcFall(struc_Board *b, char shape, int x, int y) {
 
 // determine the X, Y point is playable or not.
 int funcPlayable (struc_Board *b, int x, int y) {
+    unsigned size = 0;
     if (NULL == b) {
         cout << "funcPlayable: Board does not exist." << endl;
         return error;
     }
 
-    if (x<1 || x>b->size) {
+    size = b->size;
+    if (x<0 || x>size-1) {
         cout << "funcPlayable: coordinate x invalid." << endl;
         return error;
     };
 
-    if (y<1 || y>b->size) {
+    if (y<0 || y>size-1) {
         cout << "funcPlayable: coordinate y invalid." << endl;
         return error;
     };
 
-    if (NULL != b->board[x-1][y-1].Zi) {
+    if (NULL != b->board[x][y].Zi) {
         cout << "funcPlayable: position been fallen." << endl;
         return error;
     };
