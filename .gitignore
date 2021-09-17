@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/PlayGo.sln
+/PlayGo.vcxproj
+/PlayGo.vcxproj.filters

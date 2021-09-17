@@ -23,9 +23,9 @@ int funcSizeOfBoard (unsigned lines) {
     return 0;
 };
 
-// determine whether the next move legit.
+// determine the next X move.
 int funcMoveX(struc_Board *b, string m) {
-    int x; string x_coord;
+    int x; string x_coord; int size;
     
     if (NULL == b) {
         cout << "funcMoveX: Board does not exist." << endl;
@@ -37,39 +37,77 @@ int funcMoveX(struc_Board *b, string m) {
         return error;
     };
 
+    size = b->size;
     if (isupper(m[0])) {
-        if (m[0]<'A' || m[0]-'A'>b->size || 'I'==m[0]) {
+        if (m[0]<'A' || m[0]-'A'>size || 'I'==m[0]) {
             cout << "funcMoveX: X coordinate error." << endl;
             return error;
         };
+
+        m[0] < 'I' ? x = m[0] - 'A' : x = m[0] - 'A' + 1;
     }
 
     else {
-        if (m[0]<'a' || m[0]-'a'>b->size || 'i'==m[0]) {
+        if (m[0]<'a' || m[0]-'a'>size || 'i'==m[0]) {
             cout << "funcMoveX: x coordinate error." << endl;
             return error;
         };
-    };
 
+        m[0] < 'i' ? x = m[0] - 'a' : x = m[0] - 'a' + 1;
+    };
     
-    return 0;
+    return x;
 };
 
-// verify the coordinates are valid.
-unsigned funcCharacterToX (char x) {
-    if (x=='i' || x<'a' || x>'t') {
-        cout << x + " is not a valid x coordinate.\n";
-        return 1;
+// determine the next Y move.
+int funcMoveY(struc_Board* b, string m) {
+    int y = 0; string y_coord; int size;
+
+    if (NULL == b) {
+        cout << "funcMoveY: Board does not exist." << endl;
+        return error;
     };
 
-    if (x < 'i') return x - 'a' + 1;
-    if (x > 'i') return x - 'a' + 2;
+    if (2 != m.length() && 3 != m.length()) {
+        cout << "funcMoveY: Length error." << endl;
+        return error;
+    };
 
-    return 1;
+    y_coord = m.substr(1);
+    y = stoi(y_coord);
+    size = b->size;
+    if (y<1 || y>size) {
+        cout << "funcMoveY: Y coordinate error." << endl;
+        return error;
+    };
+
+    return y - 1;
+};
+
+// fall the pawn on the board.
+struc_Pawn *funcFall(struc_Board *b, char shape, int x, int y) {
+    struc_Pawn* pawn = NULL;
+
+    if (NULL == b) {
+        cout << "funcFall: Board does not exist." << endl;
+        return NULL;
+    };
+
+    if (error == funcPlayable(b, x, y)) {
+        cout << "funcFall: coordinate error." << endl;
+        return NULL;
+    };
+
+    pawn = new struc_Pawn;
+    pawn->shape = shape;
+    pawn->coord.x = x;
+    pawn->coord.y = y;
+    pawn->status = Alive;
+    return pawn;
 };
 
 // determine the X, Y point is playable or not.
-int funcPlayable (struc_Board *b, unsigned x, unsigned y) {
+int funcPlayable (struc_Board *b, int x, int y) {
     if (NULL == b) {
         cout << "funcPlayable: Board does not exist." << endl;
         return error;
@@ -86,7 +124,7 @@ int funcPlayable (struc_Board *b, unsigned x, unsigned y) {
     };
 
     if (NULL != b->board[x-1][y-1].Zi) {
-        cout << "funcPlayable: coordinate been fallen." << endl;
+        cout << "funcPlayable: position been fallen." << endl;
         return error;
     };
 
@@ -138,7 +176,7 @@ int funcInitBoard (struc_Board *b, unsigned s) {
 
 // print the Go board after every move.
 int funcPrintBoard (struc_Board *b) {
-    int x, y; unsigned size;
+    int x, y, size;
     string *rowToPrint, row, col;
 
     if (NULL == b) {
@@ -170,7 +208,8 @@ int funcPrintBoard (struc_Board *b) {
     rowToPrint = new string[size];
     for (y = 0; y < size; y++) {
         for (x = 0; x < size; x++) {
-            rowToPrint[y] += b->board[x][y].shape;
+            if (NULL == b->board[x][y].Zi) rowToPrint[y] += b->board[x][y].shape;
+            else rowToPrint[y] += b->board[x][y].Zi->shape;
             x==size-1 ? rowToPrint[y]+="" : rowToPrint[y] += "---";
         };
     };
