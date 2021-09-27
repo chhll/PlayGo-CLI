@@ -2,9 +2,9 @@
 
 using namespace std;
 
-enum pawn_Color {Grey = 2, Black = 1, White = 0};
-enum pawn_Status {Dead = 1, Alive = 0};
-enum position_Status {Forbidden = 2, Occupied = 1, Unoccupied = 0};
+enum class pawn_Color {Grey = 2, Black = 1, White = 0};
+enum class pawn_Status {Dead = 1, Alive = 0};
+enum class position_Status {Forbidden = 2, Occupied = 1, Unoccupied = 0};
 
 #define Error 1
 #define error -1
@@ -39,7 +39,6 @@ class struc_Step {
 public:
     struc_Coordinates coord;
     struc_Pawn* Zi;
-    unsigned Move;
 };
 
 class struc_Board {
@@ -52,7 +51,7 @@ int funcSizeOfBoard(unsigned);
 int funcPlayable(struc_Board *, int, int);
 int funcInitBoard(struc_Board *, unsigned);
 int funcPrintBoard(struc_Board *);
-struc_Step* funceInitSteps();
+int funcInitSteps(struc_Step *, unsigned);
 int funcMoveX(struc_Board *, string);
 int funcMoveY(struc_Board *, string);
 struc_Pawn *funcFall(struc_Board *, char, int, int);

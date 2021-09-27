@@ -5,7 +5,6 @@
 
 using namespace std;
 
-const unsigned total_move = 400;
 const string row_9 = "A   B   C   D   E   F   G   H   J";
 const string col_9 = "|   |   |   |   |   |   |   |   |";
 const string row_13 = "A   B   C   D   E   F   G   H   J   K   L   M   N";
@@ -103,7 +102,7 @@ struc_Pawn *funcFall(struc_Board *b, char shape, int x, int y) {
     pawn->shape = shape;
     pawn->coord.x = x;
     pawn->coord.y = y;
-    pawn->status = Alive;
+    pawn->status = pawn_Status::Alive;
     return pawn;
 };
 
@@ -135,18 +134,19 @@ int funcPlayable (struc_Board *b, int x, int y) {
 };
 
 // initialize the steps.
-struc_Step *funceInitSteps () {
-    unsigned z; struc_Step *s = NULL;
+int funcInitSteps (struc_Step *s, unsigned length) {
+    unsigned z = 0;
 
-    s = new struc_Step[total_move];
-    for (z=0; z<total_move; z++) {
+    if (NULL == s) return error;
+    if (length < 1) return error;
+    // cout << "the step length is " << length << endl;
+    for (z=0; z<length; z++) {
         s[z].coord.x = 0;
         s[z].coord.y = 0;
-        s[z].Move = z + 1;
         s[z].Zi = NULL;
     };
 
-    return s;
+    return 0;
 };
 
 // initialize the Go board.
@@ -169,7 +169,7 @@ int funcInitBoard (struc_Board *b, unsigned s) {
             b->board[x][y].blkRobbed = 0;
             b->board[x][y].whtRobbed = 0;
             b->board[x][y].shape = '+';
-            b->board[x][y].status = Unoccupied;
+            b->board[x][y].status = position_Status::Unoccupied;
             b->board[x][y].Zi = NULL;
         };
     };
