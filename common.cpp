@@ -177,6 +177,40 @@ int funcInitBoard (struc_Board *b, unsigned s) {
     return 0;
 };
 
+// Verify the board is legit.
+
+// Return the air of the pawn.
+int funcAir (struc_Board *b, struc_Pawn *p) {
+    int air = 0;
+
+    if (NULL == b || NULL == p) {
+        cout << "funcAir: Board or pawn does not exist." << endl;
+        return error;
+    };
+
+    return air;
+};
+
+// Return east of the pawn.
+struc_Pawn* funcEast (struc_Board* b, struc_Pawn* p) {
+
+};
+
+// Return west of the pawn.
+struc_Pawn* funcWest() {
+
+};
+
+// Return south of the pawn.
+struc_Pawn* funcSouth() {
+
+};
+
+// Return north of the pawn.
+struc_Pawn* funcNorth() {
+
+};
+
 // print the Go board after every move.
 int funcPrintBoard (struc_Board *b) {
     int x, y, size;

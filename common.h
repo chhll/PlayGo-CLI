@@ -47,11 +47,12 @@ public:
     struc_Position board[line_19][line_19];
 };
 
-int funcSizeOfBoard(unsigned);
-int funcPlayable(struc_Board *, int, int);
-int funcInitBoard(struc_Board *, unsigned);
-int funcPrintBoard(struc_Board *);
-int funcInitSteps(struc_Step *, unsigned);
-int funcMoveX(struc_Board *, string);
-int funcMoveY(struc_Board *, string);
-struc_Pawn *funcFall(struc_Board *, char, int, int);
+int funcAir (struc_Board*, struc_Pawn*);
+int funcSizeOfBoard (unsigned);
+int funcPlayable (struc_Board *, int, int);
+int funcInitBoard (struc_Board *, unsigned);
+int funcPrintBoard (struc_Board *);
+int funcInitSteps (struc_Step *, unsigned);
+int funcMoveX (struc_Board *, string);
+int funcMoveY (struc_Board *, string);
+struc_Pawn *funcFall (struc_Board *, char, int, int);
